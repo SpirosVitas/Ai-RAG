@@ -30,9 +30,7 @@ class RAGPipeline:
             query_embedding = query_embedding
         )
 
-        context = build_context(
-            retrieved_chunks
-        )
+        context = build_context(retrieved_chunks)
 
         answer = self.llm.generate(
             question=question,

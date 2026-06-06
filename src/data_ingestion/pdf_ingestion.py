@@ -29,7 +29,6 @@ def extract_pdf_pages(pdf_path: str)-> list[dict[str, str | int]]:
         if text and text.strip():
             pages.append(
                 {
-#                    "source_file": str(pdf_path),
                     "source_file": Path(pdf_path).name,
                     "page_number": page_number,
                     "text": text.strip(),
