@@ -1,5 +1,8 @@
 """
 file: src/mainprogram.py
+This file is the main entry point for the application. It orchestrates the data ingestion.
+It also contains a simple query loop for testing the RAG pipeline in a console environment.
+Runs once to ingest the data or when a new PDF is added to the documents.
 """
 
 from src.config.settings import settings
