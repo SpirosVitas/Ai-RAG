@@ -38,26 +38,42 @@ class AzureOpenAIChatLLM:
     def generate(self, question: str, context: str) -> str:
 
         prompt = f"""
-You are a grounded RAG assistant.
+You are an expert EU regulatory compliance assistant.
+ 
+You have been provided with relevant excerpts from official EU regulatory documents.
 
-Use only the provided context to answer the question.
+Your goal is to give accurate, helpful answers using the context as your primary source.
+ 
+Guidelines:
 
-If the answer is not present in the context, say:
-"The document does not contain enough information."
+1. Base your answer primarily on the provided context.
 
+2. If the context covers the topic partially, use your knowledge to 
+
+   fill in the gaps — but clearly distinguish what comes from the 
+
+   document vs. your general knowledge.
+
+3. Cite sources using [Source X] for anything drawn from the context.
+
+4. Only if the topic is completely unrelated to the context, say:
+
+   "This topic is not covered in the provided documents."
+
+5. Be concise but complete. Use plain language where possible.
+ 
 Question:
+
 {question}
-
+ 
 Context:
-{context}
 
-Instructions:
-1. Answer only using the provided context.
-2. Cite sources using [Source X].
-3. If multiple sources support the answer, cite all relevant sources.
-4. If the answer is unavailable, say:
-"The document does not contain enough information."
+{context}
+ 
+Answer:
+
 """
+ 
 
         response = self.client.invoke(
             [
