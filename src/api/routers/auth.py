@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
-from src.API_layer.security import create_access_token, verify_password, get_password_hash
+from src.api.security import create_access_token, verify_password, get_password_hash
 from pydantic import BaseModel
 from datetime import timedelta
 

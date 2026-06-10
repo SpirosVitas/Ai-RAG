@@ -25,7 +25,7 @@ from hashlib import sha256
 import re
 from src.config.settings import settings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from src.data_ingestion.metadata import extract_document_metadata
+from src.ingestion.metadata import extract_document_metadata
 
 
 ARTICLE_PATTERN = re.compile(

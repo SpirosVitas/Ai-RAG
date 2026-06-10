@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel, Field
-import src.app_state
-from src.API_layer.security import (get_current_user)
+import src.config.app_state
+from src.api.security import (get_current_user)
 
 
 router = APIRouter(
@@ -34,7 +34,7 @@ async def query_documents(
     user=Depends(get_current_user)
 ):
 
-    result = src.app_state.rag.ask(
+    result = src.config.app_state.rag.ask(
         request.query
     )
 

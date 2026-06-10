@@ -1,13 +1,18 @@
-from fastapi import FastAPI
-from src.API_layer.routers import auth, ingestion, retrieval
+"""
+file: src/mainprogram.py
+This file is the main entry point for the application. It orchestrates the data ingestion.
+It also contains a simple query loop for testing the RAG pipeline in a console environment.
+Runs once to ingest the data or when a new PDF is added to the documents.
+"""
+
 from src.config.settings import settings
-from src.data_ingestion.pdf_ingestion import extract_pdf_pages
-from src.data_ingestion.chunking import create_chunks
-from src.data_ingestion.embeddings import LocalEmbeddingModel
-from src.data_ingestion.vector_store import ChromaVectorStore
-from src.data_ingestion.retriever import AzureOpenAIChatLLM
-from src.data_ingestion.context_builder import build_context
-from src.data_ingestion.rag_pipeline import RAGPipeline
+from src.ingestion.pdf_ingestion import extract_pdf_pages
+from src.ingestion.chunking import create_chunks
+from src.ingestion.embeddings import LocalEmbeddingModel
+from src.ingestion.vector_store import ChromaVectorStore
+from src.ingestion.llm import AzureOpenAIChatLLM
+from src.ingestion.context_builder import build_context
+from src.ingestion.rag_pipeline import RAGPipeline
 
 
 def ingest_all_pdfs(
@@ -86,48 +91,31 @@ def main():
     # QUERY LOOP
     # ----------------------------
 
-    while True:
+#    while True:
+#
+#        question = input("\nAsk a question (or 'exit'): ")
+#
+#        if question.lower() in ["exit", "quit"]:
+#            break
 
-        question = input("\nAsk a question (or 'exit'): ")
+#        result = rag.ask(question)
 
-        if question.lower() in ["exit", "quit"]:
-            break
+#        print("\nANSWER:\n")
+#        print(result["answer"])
 
-        result = rag.ask(question)
+#        print("\nSOURCES:\n")
 
-        print("\nANSWER:\n")
-        print(result["answer"])
+#        for i, src in enumerate(result["sources"], start=1):
 
-        print("\nSOURCES:\n")
+#            meta = src["metadata"]
 
-        for i, src in enumerate(result["sources"], start=1):
-
-            meta = src["metadata"]
-
-            print(
-                f"[Source {i}] "
-                f"{meta.get('document_id')} | "
-                f"{meta.get('article_reference')} | "
-                f"distance={src['distance']:.4f}"
-            )
+#            print(
+#                f"[Source {i}] "
+#                f"{meta.get('document_id')} | "
+#                f"{meta.get('article_reference')} | "
+#                f"distance={src['distance']:.4f}"
+#            )
 
 
-app = FastAPI(
-    title=settings.PROJECT_NAME,
-    description="AI Knowledge Engineering Platform for EU Regulations Compliance",
-    version="0.1.0",
-    docs_url="/docs",       # Swagger UI URL
-    redoc_url="/redoc"
-)
-
-# Σύνδεση των Routers με το API Versioning prefix (/api/v1)
-app.include_router(auth.router, prefix=settings.API_V1_STR)
-app.include_router(ingestion.router, prefix=settings.API_V1_STR)
-app.include_router(retrieval.router, prefix=settings.API_V1_STR)
-
-@app.get("/", tags=["Root"])
-async def root():
-    return {
-        "message": "Welcome to the EU Regulatory Compliance Assistant API",
-        "docs": "/docs"
-    }
+if __name__ == "__main__":
+    main()

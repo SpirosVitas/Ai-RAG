@@ -1,8 +1,8 @@
 from src.config.settings import settings
-from src.data_ingestion.embeddings import LocalEmbeddingModel
-from src.data_ingestion.vector_store import ChromaVectorStore
-from src.data_ingestion.retriever import AzureOpenAIChatLLM
-from src.data_ingestion.rag_pipeline import RAGPipeline
+from src.ingestion.embeddings import LocalEmbeddingModel
+from src.ingestion.vector_store import ChromaVectorStore
+from src.ingestion.llm import AzureOpenAIChatLLM
+from src.ingestion.rag_pipeline import RAGPipeline
 
 
 embedder = LocalEmbeddingModel()

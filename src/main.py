@@ -5,8 +5,8 @@ for the html.
 """
 from fastapi import FastAPI
 
-from src.API_layer.routers import retrieval2
-from src.API_layer.routers import auth
+from src.api.routers import retrieval
+from src.api.routers import auth
 from fastapi.middleware.cors import CORSMiddleware
 
 #app.add_middleware(
@@ -23,7 +23,7 @@ app = FastAPI(
 )
 
 app.include_router(auth.router)
-app.include_router(retrieval2.router)
+app.include_router(retrieval.router)
 
 
 @app.get("/")
